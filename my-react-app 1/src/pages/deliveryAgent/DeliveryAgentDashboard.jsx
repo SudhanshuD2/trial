@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 
-function Dashboard() {
+function DeliveryAgentDashboard() {
   const navigate = useNavigate();
 
   return (
@@ -8,4 +8,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DeliveryAgentDashboard;
