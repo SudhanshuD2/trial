@@ -10,8 +10,8 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-stone-100 font-sans pb-12 relative overflow-hidden">
 
-      {/* Header */}
-      <div className="bg-white/80 backdrop-blur-md  border-b border-stone-200 px-6 py-4 flex justify-between items-center shadow-lg">
+      {/* Header - ADDED 'relative z-50' HERE TO FIX OVERLAP */}
+      <div className="bg-white/80 backdrop-blur-md border-b border-stone-200 px-6 py-4 flex justify-between items-center shadow-lg relative z-50">
         <h1 className="text-2xl font-bold text-amber-600 tracking-wide">
           Logistics Dashboard
         </h1>
@@ -33,10 +33,10 @@ function Dashboard() {
               <input defaultValue="+91 9876543210" className="w-full px-3 py-2 text-sm bg-stone-50 border border-stone-200 rounded-2xl text-stone-800 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" />
 
               <div className="flex gap-2 pt-2">
-                <button className="flex-1 text-xs py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:bg-blue-700 text-stone-800 rounded font-medium transition">
+                <button className="flex-1 text-xs py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:opacity-90 rounded font-medium transition">
                   Edit
                 </button>
-                <button className="flex-1 text-xs py-2 bg-stone-50 hover:bg-slate-600 text-stone-800 rounded font-medium transition">
+                <button className="flex-1 text-xs py-2 bg-stone-200 hover:bg-stone-300 text-stone-800 rounded font-medium transition">
                   Reset Password
                 </button>
               </div>
@@ -49,19 +49,19 @@ function Dashboard() {
       <div className="max-w-6xl mx-auto px-4 mt-8 flex space-x-2 bg-white/80 backdrop-blur-md p-1.5 rounded-2xl border border-stone-200 shadow-md">
         <button
           onClick={() => setTab("shipment")}
-          className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition ${tab === "shipment" ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white text-stone-800 shadow" : "text-stone-500 hover:text-stone-800 hover:bg-stone-100"}`}
+          className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition ${tab === "shipment" ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow" : "text-stone-500 hover:text-stone-800 hover:bg-stone-100"}`}
         >
           Create Shipment
         </button>
         <button
           onClick={() => setTab("track")}
-          className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition ${tab === "track" ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white text-stone-800 shadow" : "text-stone-500 hover:text-stone-800 hover:bg-stone-100"}`}
+          className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition ${tab === "track" ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow" : "text-stone-500 hover:text-stone-800 hover:bg-stone-100"}`}
         >
           Track Shipment
         </button>
         <button
           onClick={() => setTab("complaint")}
-          className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition ${tab === "complaint" ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white text-stone-800 shadow" : "text-stone-500 hover:text-stone-800 hover:bg-stone-100"}`}
+          className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition ${tab === "complaint" ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow" : "text-stone-500 hover:text-stone-800 hover:bg-stone-100"}`}
         >
           Complaints
         </button>
@@ -100,11 +100,11 @@ function Dashboard() {
               />
             </div>
 
-            <div className="p-5 bg-amber-50 border border-amber-200 rounded-2xl">
+            <div className="p-5 bg-amber-50 border border-amber-200 rounded-2xl font-semibold text-amber-900">
               Estimated Cost: ₹{estimatedCost}
             </div>
 
-            <button className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700 shadow-amber-200 shadow-md text-stone-800 font-semibold rounded-lg shadow dynamic-transition">
+            <button className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700 shadow-amber-200 shadow-md font-semibold rounded-lg transition">
               Book Shipment
             </button>
           </div>
@@ -119,7 +119,7 @@ function Dashboard() {
               <p><strong className="text-stone-500">ID:</strong> SHP10245</p>
               <p>
                 <strong className="text-stone-500">Status:</strong>{" "}
-                <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">In Transit</span>
+                <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-500/20 text-amber-700 border border-amber-500/30">In Transit</span>
               </p>
               <p><strong className="text-stone-500">Source:</strong> Mumbai</p>
               <p><strong className="text-stone-500">Destination:</strong> Delhi</p>
@@ -133,9 +133,9 @@ function Dashboard() {
 
             {/* Stepper Status Line */}
             <div className="p-4 bg-stone-100 border border-stone-200 rounded-2xl flex flex-wrap justify-between items-center text-xs sm:text-sm font-medium gap-2">
-              <span className="text-green-400">Ordered ✓</span>
+              <span className="text-green-600">Ordered ✓</span>
               <span className="text-slate-500">→</span>
-              <span className="text-green-400">Dispatched ✓</span>
+              <span className="text-green-600">Dispatched ✓</span>
               <span className="text-slate-500">→</span>
               <span className="text-amber-700 font-bold bg-amber-100 px-2 py-1 rounded border border-amber-200 animate-pulse">In Transit 📦</span>
               <span className="text-slate-500">→</span>
@@ -152,7 +152,7 @@ function Dashboard() {
             <div className="space-y-4 max-w-xl">
               <input defaultValue="SHP10245" placeholder="Order ID" className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-blue-500" />
               <textarea rows="4" placeholder="Complaint Description" className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-lg text-stone-800 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              <button className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:bg-blue-700 text-stone-800 font-semibold rounded-lg shadow transition">
+              <button className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:opacity-90 font-semibold rounded-lg shadow transition">
                 Submit Ticket
               </button>
             </div>
@@ -164,12 +164,12 @@ function Dashboard() {
             <div className="space-y-3">
               <div className="p-4 bg-stone-100 border border-stone-200 rounded-2xl flex justify-between items-center">
                 <p className="font-semibold text-stone-800">Ticket #T101</p>
-                <p className="text-sm px-2 py-0.5 rounded bg-green-500/20 text-green-400 border border-green-500/30">Resolved ✅</p>
+                <p className="text-sm px-2 py-0.5 rounded bg-green-500/20 text-green-700 border border-green-500/30">Resolved ✅</p>
               </div>
 
               <div className="p-4 bg-stone-100 border border-stone-200 rounded-2xl flex justify-between items-center">
                 <p className="font-semibold text-stone-800">Ticket #T102</p>
-                <p className="text-sm px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">Under Review ⏳</p>
+                <p className="text-sm px-2 py-0.5 rounded bg-amber-500/20 text-amber-700 border border-amber-500/30">Under Review ⏳</p>
               </div>
             </div>
           </div>

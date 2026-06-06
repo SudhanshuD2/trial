@@ -54,18 +54,18 @@ function Register() {
         </form>
 
         <div className="flex items-center gap-3 my-5">
-        <span className="flex-1 h-px bg-stone-200" />
-        <span className="text-xs text-stone-300">
-          Already registered?
-        </span>
-        <span className="flex-1 h-px bg-stone-200" />
-      </div>
-      <p className="text-center text-sm text-stone-400">
-        Are you already registered?{" "}
-        <Link to="/login" className="text-amber-600 hover:text-amber-700 font-semibold transition-colors duration-200">
-          Login Hare
-        </Link>
-      </p>
+          <span className="flex-1 h-px bg-stone-200" />
+          <span className="text-xs text-stone-300">
+            Already registered?
+          </span>
+          <span className="flex-1 h-px bg-stone-200" />
+        </div>
+        <p className="text-center text-sm text-stone-400">
+          Are you already registered?{" "}
+          <Link to="/login" className="text-amber-600 hover:text-amber-700 font-semibold transition-colors duration-200">
+            Login Here
+          </Link>
+        </p>
       </div>
     </div>
   );
