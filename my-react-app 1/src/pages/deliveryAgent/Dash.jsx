@@ -1,79 +1,78 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function DeliveryAgentDashboard() {
+function Dash() {
   const [tab, setTab] = useState("active");
-    const [showProfile, setShowProfile] = useState(false);
-    const [selectedShipment, setSelectedShipment] = useState(null);
-  
-    const [shipments, setShipments] = useState([
-      {
-        id: "SHP10245",
-        src: "Mumbai",
-        dest: "Delhi",
-        status: "In Transit",
-        eta: "20 June 2026",
-        commission: 1200,
-      },
-      {
-        id: "SHP10246",
-        src: "Pune",
-        dest: "Bangalore",
-        status: "Picked Up",
-        eta: "18 June 2026",
-        commission: 900,
-      },
-      {
-        id: "SHP10247",
-        src: "Hyderabad",
-        dest: "Chennai",
-        status: "Out for Delivery",
-        eta: "16 June 2026",
-        commission: 1500,
-      },
-    ]);
-  
-    const completedOrders = [
-      {
-        id: "SHP10190",
-        src: "Jaipur",
-        dest: "Ahmedabad",
-        date: "10 June 2026",
-        commission: 1000,
-      },
-      {
-        id: "SHP10191",
-        src: "Nagpur",
-        dest: "Surat",
-        date: "12 June 2026",
-        commission: 800,
-      },
-      {
-        id: "SHP10192",
-        src: "Kolkata",
-        dest: "Patna",
-        date: "14 June 2026",
-        commission: 1400,
-      },
-    ];
-  
-    const totalCommission = completedOrders.reduce(
-      (sum, item) => sum + item.commission,
-      0
+  const [showProfile, setShowProfile] = useState(false);
+  const [selectedShipment, setSelectedShipment] = useState(null);
+
+  const [shipments, setShipments] = useState([
+    {
+      id: "SHP10245",
+      src: "Mumbai",
+      dest: "Delhi",
+      status: "In Transit",
+      eta: "20 June 2026",
+      commission: 1200,
+    },
+    {
+      id: "SHP10246",
+      src: "Pune",
+      dest: "Bangalore",
+      status: "Picked Up",
+      eta: "18 June 2026",
+      commission: 900,
+    },
+    {
+      id: "SHP10247",
+      src: "Hyderabad",
+      dest: "Chennai",
+      status: "Out for Delivery",
+      eta: "16 June 2026",
+      commission: 1500,
+    },
+  ]);
+
+  const completedOrders = [
+    {
+      id: "SHP10190",
+      src: "Jaipur",
+      dest: "Ahmedabad",
+      date: "10 June 2026",
+      commission: 1000,
+    },
+    {
+      id: "SHP10191",
+      src: "Nagpur",
+      dest: "Surat",
+      date: "12 June 2026",
+      commission: 800,
+    },
+    {
+      id: "SHP10192",
+      src: "Kolkata",
+      dest: "Patna",
+      date: "14 June 2026",
+      commission: 1400,
+    },
+  ];
+
+  const totalCommission = completedOrders.reduce(
+    (sum, item) => sum + item.commission,
+    0
+  );
+
+  const updateStatus = (value) => {
+    setSelectedShipment({
+      ...selectedShipment,
+      status: value,
+    });
+
+    setShipments(
+      shipments.map((s) =>
+        s.id === selectedShipment.id ? { ...s, status: value } : s
+      )
     );
-  
-    const updateStatus = (value) => {
-      setSelectedShipment({
-        ...selectedShipment,
-        status: value,
-      });
-  
-      setShipments(
-        shipments.map((s) =>
-          s.id === selectedShipment.id ? { ...s, status: value } : s
-        )
-      );
-    };
-  const navigate = useNavigate();
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 pb-12">
@@ -331,4 +330,4 @@ function DeliveryAgentDashboard() {
   );
 }
 
-export default DeliveryAgentDashboard;
+export default Dash;
