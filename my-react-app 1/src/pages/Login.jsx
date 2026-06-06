@@ -8,7 +8,8 @@ function InputField({ icon, type, placeholder }) {
         type={type}
         placeholder={placeholder}
         required
-        className="w-full pl-10 pr-4 py-3 rounded-xl bg-stone-50 border border-stone-200 text-stone-800 placeholder-stone-400 text-sm focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100 transition-all duration-200"
+        className="w-full pl-10 pr-4 py-3 rounded-xl bg-stone-50 border 
+        border-stone-200 text-stone-800 placeholder-stone-400 text-sm focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100 transition-all duration-200"
       />
     </div>
   );
@@ -17,18 +18,58 @@ function InputField({ icon, type, placeholder }) {
 export default function Login() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+  const users = [
+    {
+      email: "admin@gmail.com",
+      password: "admin123",
+      role: "admin",
+    },
+    {
+      email: "agent@gmail.com",
+      password: "agent123",
+      role: "agent",
+    },
+    {
+      email: "user@gmail.com",
+      password: "user123",
+      role: "user",
+    },
+  ];
+
+  const loggedUser = users.find(
+    (user) =>
+      user.email === email &&
+      user.password === password
+  );
+
+  if (!loggedUser) {
+    alert("Invalid Credentials");
+    return;
+  }
+
+  setLoading(true);
+
+  setTimeout(() => {
+    setLoading(false);
+
+    if (loggedUser.role === "admin") {
+      navigate("/admin-dashboard");
+    } else if (loggedUser.role === "agent") {
+      navigate("/agent-dashboard");
+    } else {
       navigate("/dashboard");
-    }, 800);
+    }
+  }, 800);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-stone-100 px-4">
+    <div className="h-screen overflow-hidden flex items-center justify-center bg-stone-100 px-4 relative">
 
       {/* Soft background accents */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-amber-100 rounded-full opacity-40 blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -53,14 +94,34 @@ export default function Login() {
 
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-3.5">
-          <InputField type="text" placeholder="Username" />
-          <InputField type="email" placeholder="Email address" />
-          <InputField type="password" placeholder="Password" />
+          {/* <InputField type="text" placeholder="Username" /> */}
+          {/* Input Email */}
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 text-stone-800 placeholder-stone-400 
+            text-sm focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100 transition-all duration-200"
+          />
+
+          {/* Input Password */}
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 text-stone-800 
+            placeholder-stone-400 text-sm focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100 transition-all duration-200"
+          />
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-1 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-sm font-semibold tracking-wide shadow-md shadow-amber-200 hover:shadow-lg hover:shadow-amber-200 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full mt-1 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700
+            text-white text-sm font-semibold tracking-wide shadow-md shadow-amber-200 hover:shadow-lg hover:shadow-amber-200 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {loading ? "Signing in…" : "Sign in"}
           </button>
@@ -73,7 +134,6 @@ export default function Login() {
           </a>
         </div>
 
-        {/* Divider */}
         <div className="flex items-center gap-3 my-5">
           <span className="flex-1 h-px bg-stone-200" />
           <span className="text-xs text-stone-300">New here?</span>

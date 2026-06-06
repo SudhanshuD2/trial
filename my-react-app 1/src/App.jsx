@@ -11,13 +11,15 @@ import ManagerShipment from "./pages/admin/ManagerShipment";
 import ManagerComplaint from "./pages/admin/ManagerComplaint";
 import ManagerPricing from "./pages/admin/ManagerPricing";
 import ManagerCity from "./pages/admin/ManagerCity";
+import LandingPage from "./pages/LandingPage";
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
