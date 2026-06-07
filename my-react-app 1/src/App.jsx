@@ -6,18 +6,27 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import DeliveryAgentDashboard from "./pages/deliveryAgent/DeliveryAgentDashboard";
 import ActionScreen from "./pages/deliveryAgent/ActionScreen";
 import Shipments from "./pages/deliveryAgent/Shipments";
-import ManagerUser from "./pages/admin/ManagerUser";
-import ManagerShipment from "./pages/admin/ManagerShipment";
-import ManagerComplaint from "./pages/admin/ManagerComplaint";
-import ManagerPricing from "./pages/admin/ManagerPricing";
-import ManagerCity from "./pages/admin/ManagerCity";
+import ManagerShipment from "./pages/admin/ShipmentManagement";
+import ManagerComplaint from "./pages/admin/ManageComplaints";
+import ManagerPricing from "./pages/admin/PricingRules";
+import CityManagement from "./pages/admin/CityManagement";
+import UserManagement from "./pages/admin/UserManagement";
+import AgentManagement from "./pages/admin/AgentManagement";
+import ShipmentManagement from "./pages/admin/ShipmentManagement";
+import ManageComplaints from "./pages/admin/ManageComplaints";
+import PricingRules from "./pages/admin/PricingRules";
+import LandingPage from "./pages/LandingPage";
+
+
+
+
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/" element={<LandingPage />}/>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -31,11 +40,6 @@ function App() {
         <Route path="/admin/pricing" element={<PricingRules />}/>
         <Route path="/action-screen" element={<ActionScreen />} />
         <Route path="/shipments" element={<Shipments />} />
-        <Route path="/user-manager" element={<UserManagement />} />
-        <Route path="/shipment-manager" element={<ManagerShipment />} />
-        <Route path="/complaint-manager" element={<ManagerComplaint />} />
-        <Route path="/pricing-manager" element={<ManagerPricing />} />
-        {/* <Route path="/city-manager" element={<ManagerCity />} /> */}
       </Routes>
     </BrowserRouter>
   );
