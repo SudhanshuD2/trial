@@ -11,7 +11,6 @@ import ManagerShipment from "./pages/admin/ManagerShipment";
 import ManagerComplaint from "./pages/admin/ManagerComplaint";
 import ManagerPricing from "./pages/admin/ManagerPricing";
 import ManagerCity from "./pages/admin/ManagerCity";
-import LandingPage from "./pages/LandingPage";
 
 
 function App() {
@@ -23,14 +22,20 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/users" element={<UserManagement/>} />
         <Route path="/agent-dashboard" element={<DeliveryAgentDashboard />} />
+        <Route path="/admin/cities" element={<CityManagement />} />
+        <Route path="/admin/agents" element={<AgentManagement />}/>
+        <Route path="/admin/shipments" element={<ShipmentManagement />}/>
+        <Route path="/admin/complaints" element={<ManageComplaints />}/>
+        <Route path="/admin/pricing" element={<PricingRules />}/>
         <Route path="/action-screen" element={<ActionScreen />} />
         <Route path="/shipments" element={<Shipments />} />
-        <Route path="/user-manager" element={<ManagerUser />} />
+        <Route path="/user-manager" element={<UserManagement />} />
         <Route path="/shipment-manager" element={<ManagerShipment />} />
         <Route path="/complaint-manager" element={<ManagerComplaint />} />
         <Route path="/pricing-manager" element={<ManagerPricing />} />
-        <Route path="/city-manager" element={<ManagerCity />} />
+        {/* <Route path="/city-manager" element={<ManagerCity />} /> */}
       </Routes>
     </BrowserRouter>
   );
