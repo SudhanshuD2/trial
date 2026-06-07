@@ -2,136 +2,114 @@ import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import DashboardHeader from "../../components/DashboardHeader";
 import {
-  Users,
   CheckCircle,
   Plus,
   Trash2,
-  Filter,
-  Download,
-  ChevronLeft,
-  ChevronRight,
-  X,
   User,
   Mail,
   Lock,
+  Pencil,
+  X,
+  Check,
 } from "lucide-react";
 
-
-const agents = [
-  {
-    id: "AG-1024",
-    initials: "MS",
-    name: "Michael Scott",
-    status: "Active",
-  },
-  {
-    id: "AG-1025",
-    initials: "DS",
-    name: "Dwight Schrute",
-    status: "Active",
-  },
-  {
-    id: "AG-1026",
-    initials: "JH",
-    name: "Jim Halpert",
-    status: "Active",
-  },
-  {
-    id: "AG-1027",
-    initials: "PB",
-    name: "Pam Beesly",
-    status: "On Break",
-  },
+const initialAgents = [
+  { id: "AG1024", initials: "RS", name: "Rahul Sharma", status: "Active" },
+  { id: "AG1025", initials: "AK", name: "Amit Kumar", status: "Active" },
+  { id: "AG1026", initials: "VS", name: "Vikram Singh", status: "Active" },
+  { id: "AG1027", initials: "DP", name: "Deepika Padukone", status: "On Break" },
 ];
 
 const AgentManagement = () => {
+  const [agents, setAgents] = useState(initialAgents);
   const [showModal, setShowModal] = useState(false);
 
+  // State tracking for row editing inline
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({ name: "", status: "" });
+
+  // Handle opening the inline edit mode for a specific row
+  const startEditing = (agent) => {
+    setEditingId(agent.id);
+    setEditForm({ name: agent.name, status: agent.status });
+  };
+
+  // Cancel inline editing
+  const cancelEditing = () => {
+    setEditingId(null);
+  };
+
+  // Save the inline edited details back to local state
+  const saveEdit = (id) => {
+    setAgents(
+      agents.map((agent) => {
+        if (agent.id === id) {
+          // Generate new initials from the edited name string
+          const names = editForm.name.trim().split(" ");
+          const initials = names.map((n) => n[0]).join("").toUpperCase().slice(0, 2) || "AG";
+
+          return {
+            ...agent,
+            name: editForm.name,
+            status: editForm.status,
+            initials: initials,
+          };
+        }
+        return agent;
+      })
+    );
+    setEditingId(null);
+  };
+
   return (
-    <div className="flex bg-slate-50 min-h-screen">
+    <div className="flex bg-stone-100 min-h-screen font-sans text-stone-800">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         <DashboardHeader />
 
-        <main className="p-8">
-          {/* Page Header */}
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-slate-800">
-                Agent Management
-              </h1>
-              <p className="text-slate-500 mt-1">
-                Manage all logistics agents
-              </p>
-            </div>
+        <main className="flex-1 p-6 md:p-8 overflow-auto space-y-8">
+          <div>
+            <h1 className="text-2xl font-bold text-stone-900 tracking-tight">Agent Management</h1>
+            <p className="text-stone-500 text-sm mt-1">Manage and monitor all field logistics agents</p>
           </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {/* Total Agents */}
-            <div className="bg-white rounded-xl p-6 shadow-sm border">
-              <div className="flex flex-col items-center">
-                <div className="p-3 rounded-lg bg-indigo-100 text-indigo-600">
-                  <Users size={24} />
-                </div>
-
-                <p className="mt-4 text-xs uppercase text-slate-500 font-semibold">
-                  Total Agents
-                </p>
-
-                <h3 className="text-3xl font-bold mt-2">1,284</h3>
-              </div>
+          {/* Stats Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col items-center justify-center">
+              <p className="text-xs font-bold uppercase tracking-wider text-stone-500">Total Agents</p>
+              <h3 className="text-2xl font-black text-stone-900 mt-1">{agents.length}</h3>
             </div>
 
-            {/* Active Agents */}
-            <div className="bg-white rounded-xl p-6 shadow-sm border">
-              <div className="flex flex-col items-center">
-                <div className="p-3 rounded-lg bg-green-100 text-green-600">
-                  <CheckCircle size={24} />
-                </div>
-
-                <p className="mt-4 text-xs uppercase text-slate-500 font-semibold">
-                  Active Now
-                </p>
-
-                <h3 className="text-3xl font-bold mt-2">942</h3>
+            <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col items-center justify-center">
+              <div className="p-1.5 bg-green-50 rounded-lg text-green-600 border border-green-100 mb-2">
+                <CheckCircle size={16} />
               </div>
+              <p className="text-xs font-bold uppercase tracking-wider text-stone-500">Active Now</p>
+              <h3 className="text-2xl font-black text-stone-900 mt-1">
+                {agents.filter((a) => a.status === "Active").length}
+              </h3>
             </div>
 
-            {/* Add Agent */}
             <button
               onClick={() => setShowModal(true)}
-              className="bg-green-700 text-white rounded-xl shadow-sm flex flex-col items-center justify-center hover:bg-green-800 transition-all"
+              className="bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-2xl p-6 shadow-md shadow-amber-100 flex flex-col items-center justify-center hover:from-amber-600 hover:to-amber-700 transition duration-300 group"
             >
-              <Plus size={40} />
-
-              <span className="font-bold text-lg mt-2 uppercase">
-                Add Agent
-              </span>
+              <Plus size={24} className="group-hover:scale-110 transition duration-300" />
+              <span className="font-bold text-xs tracking-wide uppercase mt-2">Add New Agent</span>
             </button>
           </div>
 
-          {/* Table */}
-          <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
-            <div className="flex justify-between items-center p-5 border-b">
-              <h3 className="font-bold text-lg">Agents</h3>
-
-              <div className="flex gap-2">
-                <button className="p-2 hover:bg-slate-100 rounded-lg">
-                  <Filter size={18} />
-                </button>
-
-                <button className="p-2 hover:bg-slate-100 rounded-lg">
-                  <Download size={18} />
-                </button>
-              </div>
+          {/* Table Container */}
+          <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-stone-200 shadow-xl overflow-hidden">
+            <div className="flex justify-between items-center p-6 border-b border-stone-200">
+              <h3 className="text-lg font-bold text-stone-900 tracking-tight">On-Field Fleet</h3>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-slate-50">
-                  <tr className="text-left text-xs uppercase text-slate-500">
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-stone-50 text-xs font-bold uppercase tracking-wider text-stone-500 border-b border-stone-200">
+                  <tr>
                     <th className="px-6 py-4">Serial No.</th>
                     <th className="px-6 py-4">Agent ID</th>
                     <th className="px-6 py-4">Name</th>
@@ -139,71 +117,102 @@ const AgentManagement = () => {
                     <th className="px-6 py-4 text-right">Actions</th>
                   </tr>
                 </thead>
+                <tbody className="divide-y divide-stone-100 text-sm">
+                  {agents.map((agent, index) => {
+                    const isEditing = editingId === agent.id;
 
-                <tbody>
-                  {agents.map((agent, index) => (
-                    <tr
-                      key={agent.id}
-                      className="border-t hover:bg-slate-50"
-                    >
-                      <td className="px-6 py-4">
-                        {String(index + 1).padStart(2, "0")}
-                      </td>
+                    return (
+                      <tr key={agent.id} className="hover:bg-stone-50/80 transition min-h-[60px]">
+                        <td className="px-6 py-4 text-stone-500">{String(index + 1).padStart(2, "0")}</td>
 
-                      <td className="px-6 py-4">
-                        <span className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold">
-                          {agent.id}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">
-                            {agent.initials}
-                          </div>
-
-                          {agent.name}
-                        </div>
-                      </td>
-
-                      <td className="px-6 py-4">
-                        {agent.status === "Active" ? (
-                          <span className="text-green-600 font-semibold">
-                            ● Active
+                        <td className="px-6 py-4">
+                          <span className="px-2.5 py-0.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-full text-xs font-bold uppercase">
+                            {agent.id}
                           </span>
-                        ) : (
-                          <span className="text-amber-600 font-semibold">
-                            ● On Break
-                          </span>
-                        )}
-                      </td>
+                        </td>
 
-                      <td className="px-6 py-4 text-right">
-                        <button className="text-red-500 hover:text-red-700">
-                          <Trash2 size={18} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                        {/* Name Field Column - Static vs Input Field */}
+                        <td className="px-6 py-4">
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              value={editForm.name}
+                              onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                              className="px-3 py-1.5 border border-stone-200 bg-stone-50 rounded-xl text-sm text-stone-800 outline-none focus:border-amber-500 transition max-w-xs w-full"
+                            />
+                          ) : (
+                            <div className="flex items-center gap-3 font-medium text-stone-700">
+                              <div className="h-8 w-8 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-800 flex items-center justify-center text-xs font-bold uppercase">
+                                {agent.initials}
+                              </div>
+                              {agent.name}
+                            </div>
+                          )}
+                        </td>
+
+                        {/* Status Column - Static Status Tag vs Dropdown Select Selector */}
+                        <td className="px-6 py-4">
+                          {isEditing ? (
+                            <select
+                              value={editForm.status}
+                              onChange={(e) => setEditForm({ ...editForm, status: e.target.value })}
+                              className="px-3 py-1.5 border border-stone-200 bg-stone-50 rounded-xl text-sm text-stone-800 outline-none focus:border-amber-500 transition"
+                            >
+                              <option value="Active">Active</option>
+                              <option value="On Break">On Break</option>
+                            </select>
+                          ) : (
+                            <span className={`font-bold text-xs uppercase tracking-wide flex items-center gap-1.5 ${agent.status === "Active" ? "text-green-600" : "text-amber-600"}`}>
+                              <span className={`h-2 w-2 rounded-full block ${agent.status === "Active" ? "bg-green-500" : "bg-amber-500"}`} />
+                              {agent.status}
+                            </span>
+                          )}
+                        </td>
+
+                        {/* Interactive Context Action Buttons Column */}
+                        <td className="px-6 py-4 text-right">
+                          {isEditing ? (
+                            <div className="flex justify-end gap-3">
+                              <button
+                                onClick={() => saveEdit(agent.id)}
+                                className="p-1.5 bg-green-50 text-green-700 border border-green-200 rounded-lg hover:bg-green-100 transition shadow-sm"
+                                title="Save Profile"
+                              >
+                                <Check size={16} />
+                              </button>
+                              <button
+                                onClick={cancelEditing}
+                                className="p-1.5 bg-stone-50 text-stone-600 border border-stone-200 rounded-lg hover:bg-stone-200 transition shadow-sm"
+                                title="Cancel"
+                              >
+                                <X size={16} />
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex justify-end gap-4">
+                              <button
+                                onClick={() => startEditing(agent)}
+                                className="flex items-center gap-1 text-stone-500 hover:text-amber-600 text-xs font-bold transition"
+                                title="Edit Profile"
+                              >
+                                <Pencil size={14} />
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => setAgents(agents.filter((a) => a.id !== agent.id))}
+                                className="text-stone-400 hover:text-rose-600 transition"
+                                title="Delete Agent"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
-            </div>
-
-            {/* Pagination */}
-            <div className="flex items-center justify-between p-5 border-t">
-              <span className="text-sm text-slate-500">
-                Showing 1 to 4 of 1,284 entries
-              </span>
-
-              <div className="flex gap-2">
-                <button className="p-2 border rounded-lg">
-                  <ChevronLeft size={18} />
-                </button>
-
-                <button className="p-2 border rounded-lg">
-                  <ChevronRight size={18} />
-                </button>
-              </div>
             </div>
           </div>
         </main>
@@ -211,96 +220,41 @@ const AgentManagement = () => {
 
       {/* Add Agent Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50">
-          <div
-            onClick={() => setShowModal(false)}
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-          />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div onClick={() => setShowModal(false)} className="absolute inset-0 bg-stone-900/40 backdrop-blur-sm" />
+          <div className="relative w-full max-w-md bg-white border border-stone-200 rounded-2xl shadow-2xl overflow-hidden p-6 space-y-4">
+            <h3 className="font-bold text-lg text-stone-900 tracking-tight border-b border-stone-100 pb-2">Add New Agent</h3>
 
-          <div className="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl overflow-hidden">
-            <div className="flex items-center justify-between border-b p-5">
-              <h3 className="font-bold text-lg">Add New Agent</h3>
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-bold uppercase tracking-wide text-stone-500">Full Name</label>
+                <div className="relative mt-1">
+                  <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <input type="text" placeholder="Rahul Sharma" className="w-full border border-stone-200 bg-stone-50 rounded-xl pl-10 pr-4 py-2 text-sm text-stone-800 outline-none focus:border-amber-400 transition" />
+                </div>
+              </div>
 
-              <button onClick={() => setShowModal(false)}>
-                <X size={20} />
-              </button>
+              <div>
+                <label className="text-xs font-bold uppercase tracking-wide text-stone-500">Email Address</label>
+                <div className="relative mt-1">
+                  <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <input type="email" placeholder="rahul.sharma@email.com" className="w-full border border-stone-200 bg-stone-50 rounded-xl pl-10 pr-4 py-2 text-sm text-stone-800 outline-none focus:border-amber-400 transition" />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold uppercase tracking-wide text-stone-500">Initial Password</label>
+                <div className="relative mt-1">
+                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <input type="password" placeholder="••••••••" className="w-full border border-stone-200 bg-stone-50 rounded-xl pl-10 pr-4 py-2 text-sm text-stone-800 outline-none focus:border-amber-400 transition" />
+                </div>
+              </div>
             </div>
 
-            <form className="p-6 space-y-4">
-              <div>
-                <label className="text-sm font-medium">
-                  Full Name
-                </label>
-
-                <div className="relative mt-2">
-                  <User
-                    size={18}
-                    className="absolute left-3 top-3 text-slate-400"
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Michael Scott"
-                    className="w-full border rounded-lg pl-10 pr-4 py-3"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">
-                  Email Address
-                </label>
-
-                <div className="relative mt-2">
-                  <Mail
-                    size={18}
-                    className="absolute left-3 top-3 text-slate-400"
-                  />
-
-                  <input
-                    type="email"
-                    placeholder="agent@example.com"
-                    className="w-full border rounded-lg pl-10 pr-4 py-3"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">
-                  Initial Password
-                </label>
-
-                <div className="relative mt-2">
-                  <Lock
-                    size={18}
-                    className="absolute left-3 top-3 text-slate-400"
-                  />
-
-                  <input
-                    type="password"
-                    placeholder="********"
-                    className="w-full border rounded-lg pl-10 pr-4 py-3"
-                  />
-                </div>
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="flex-1 border rounded-lg py-3"
-                >
-                  Cancel
-                </button>
-
-                <button
-                  type="submit"
-                  className="flex-1 bg-indigo-600 text-white rounded-lg py-3 hover:bg-indigo-700"
-                >
-                  Add Agent
-                </button>
-              </div>
-            </form>
+            <div className="flex gap-3 pt-2">
+              <button onClick={() => setShowModal(false)} className="flex-1 border border-stone-200 rounded-xl py-2 text-sm font-semibold text-stone-700 hover:bg-stone-50 transition">Cancel</button>
+              <button onClick={() => setShowModal(false)} className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-xl py-2 text-sm font-semibold shadow-md shadow-amber-100 transition">Create Agent</button>
+            </div>
           </div>
         </div>
       )}

@@ -75,6 +75,9 @@ function DeliveryAgentDashboard() {
     );
   };
   const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate("/login");
+  };
 
   return (
     <div className="min-h-screen bg-stone-100 pb-12 relative overflow-hidden">
@@ -87,52 +90,61 @@ function DeliveryAgentDashboard() {
         <h1 className="text-2xl font-bold text-amber-600">
           Delivery Agent Dashboard
         </h1>
+        <div className="flex items-center gap-4">
 
-        <div className="relative">
-
+          {/* Functional Logout Action Button */}
           <button
-            onClick={() => setShowProfile(!showProfile)}
-            className="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center"
+            onClick={handleLogout}
+            className="px-4 py-2 bg-stone-50 hover:bg-stone-200 text-stone-700 font-bold text-xs uppercase tracking-wider rounded-xl border border-stone-200 shadow-sm transition duration-200"
           >
-            👤
+            Logout
           </button>
+          <div className="relative">
 
-          {showProfile && (
-            <div className="fixed z-200 right-0 top-12 z-[9999] w-72 bg-white border border-stone-200 rounded-xl p-4 shadow-2xl space-y-3">
+            <button
+              onClick={() => setShowProfile(!showProfile)}
+              className="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center"
+            >
+              👤
+            </button>
 
-              <h3 className="font-bold border-b border-stone-200 text-stone-800 pb-2">
-                Agent Profile
-              </h3>
+            {showProfile && (
+              <div className="fixed z-200 right-0 top-12 z-[9999] w-72 bg-white border border-stone-200 rounded-xl p-4 shadow-2xl space-y-3">
 
-              <input
-                defaultValue="Rahul Sharma"
-                className="w-full px-3 py-2 bg-stone-50 border border-stone-200 text-stone-800 rounded"
-              />
+                <h3 className="font-bold border-b border-stone-200 text-stone-800 pb-2">
+                  Agent Profile
+                </h3>
 
-              <input
-                defaultValue="rahul@logistics.com"
-                className="w-full px-3 py-2 bg-stone-50 border border-stone-200 text-stone-800 rounded"
-              />
+                <input
+                  defaultValue="Rahul Sharma"
+                  className="w-full px-3 py-2 bg-stone-50 border border-stone-200 text-stone-800 rounded"
+                />
 
-              <input
-                defaultValue="+91 9876543210"
-                className="w-full px-3 py-2 bg-stone-50 border border-stone-200 text-stone-800 rounded"
-              />
+                <input
+                  defaultValue="rahul@logistics.com"
+                  className="w-full px-3 py-2 bg-stone-50 border border-stone-200 text-stone-800 rounded"
+                />
 
-              <div className="flex gap-2">
+                <input
+                  defaultValue="+91 9876543210"
+                  className="w-full px-3 py-2 bg-stone-50 border border-stone-200 text-stone-800 rounded"
+                />
 
-                <button className="flex-1 bg-blue-600 py-2 rounded">
-                  Edit
-                </button>
+                <div className="flex gap-2">
 
-                <button className="flex-1 bg-amber-500 py-2 rounded">
-                  Reset
-                </button>
+                  <button className="flex-1 bg-blue-600 py-2 rounded">
+                    Edit
+                  </button>
+
+                  <button className="flex-1 bg-amber-500 py-2 rounded">
+                    Reset
+                  </button>
+
+                </div>
 
               </div>
-
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
@@ -169,8 +181,8 @@ function DeliveryAgentDashboard() {
           <button
             onClick={() => setTab("active")}
             className={`flex-1 py-2 rounded-lg font-semibold transition ${tab === "active"
-                ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white"
-                : "hover:bg-stone-100 text-stone-500"
+              ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white"
+              : "hover:bg-stone-100 text-stone-500"
               }`}
           >
             Active Assigned Shipments
@@ -179,8 +191,8 @@ function DeliveryAgentDashboard() {
           <button
             onClick={() => setTab("commission")}
             className={`flex-1 py-2 rounded-lg font-semibold transition ${tab === "commission"
-                ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white"
-                : "hover:bg-stone-100 text-stone-500"
+              ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white"
+              : "hover:bg-stone-100 text-stone-500"
               }`}
           >
             Commission Earned

@@ -10,145 +10,139 @@ import {
   Trash2,
 } from "lucide-react";
 
-const shipments = [
+// Updated dataset representing Indian users instead of orders
+const usersData = [
   {
-    id: "SH-001XA",
-    creator: "ABC",
-    source: "Delhi",
-    destination: "Mumbai",
-    agent: "John Smith",
-    status: "Delivered",
-    color: "bg-emerald-100 text-emerald-700",
+    id: "USR4012",
+    name: "Aarav Sharma",
+    email: "aarav.sharma@email.com",
+    city: "Mumbai",
+    phone: "+91 98765 43210",
+    role: "Admin",
+    status: "Active",
+    color: "bg-green-100 text-green-700 border-green-200",
   },
   {
-    id: "SH-0032XB",
-    creator: "XYZ",
-    source: "Chennai",
-    destination: "Delhi",
-    agent: "Emma Wilson",
-    status: "In Transit",
-    color: "bg-indigo-100 text-indigo-700",
+    id: "USR7831",
+    name: "Priya Patel",
+    email: "priya.patel@email.com",
+    city: "Ahmedabad",
+    phone: "+91 91234 56789",
+    role: "Agent",
+    status: "Active",
+    color: "bg-green-100 text-green-700 border-green-200",
   },
   {
-    id: "SH-003XC",
-    creator: "Robert Wilson",
-    source: "Newark Hub",
-    destination: "Indore",
-    agent: "Michael Brown",
-    status: "Delayed",
-    color: "bg-amber-100 text-amber-700",
+    id: "USR2944",
+    name: "Rohan Verma",
+    email: "rohan.v@email.com",
+    city: "Delhi",
+    phone: "+91 99887 76655",
+    role: "Customer",
+    status: "Suspended",
+    color: "bg-stone-200 text-stone-700 border-stone-300",
   },
   {
-    id: "SH004DX",
-    creator: "Sarah Chen",
-    source: "Noida",
-    destination: "Bhopal",
-    agent: "Sarah Davis",
-    status: "Cancelled",
-    color: "bg-rose-100 text-rose-700",
+    id: "USR5019",
+    name: "Ananya Iyer",
+    email: "ananya.iyer@email.com",
+    city: "Chennai",
+    phone: "+91 88776 65544",
+    role: "Customer",
+    status: "Active",
+    color: "bg-green-100 text-green-700 border-green-200",
   },
 ];
 
 function UserManagement() {
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex min-h-screen bg-stone-100 font-sans text-stone-800">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         <DashboardHeader />
 
-        <main className="p-8">
+        <main className="flex-1 p-6 md:p-8 overflow-auto space-y-8">
           {/* Page Title */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800">
+          <section>
+            <h2 className="text-2xl font-bold text-stone-900 tracking-tight">
               User Management
             </h2>
           </section>
 
-          {/* Table */}
-          <section className="bg-white rounded-xl shadow overflow-hidden">
-            <div className="p-6 border-b flex items-center justify-between">
-              <h3 className="font-bold text-slate-800">
-                Users & Shipments
+          {/* Users Table Container */}
+          <section className="bg-white/80 backdrop-blur-md rounded-2xl border border-stone-200 shadow-xl overflow-hidden">
+            <div className="p-6 border-b border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <h3 className="text-lg font-bold text-stone-900 tracking-tight">
+                Registered Users
               </h3>
-
-              <div className="flex items-center gap-3">
-                <button className="flex items-center gap-2 px-4 py-2 border rounded-xl text-sm hover:bg-slate-50">
-                  <Filter size={16} />
-                  Filter
-                </button>
-
-                <button className="flex items-center gap-2 px-4 py-2 bg-emerald-700 text-white rounded-xl text-sm font-semibold hover:bg-emerald-800">
-                  <Plus size={16} />
-                  Add User
-                </button>
-              </div>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-slate-50 text-xs uppercase text-slate-500">
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-stone-50 text-xs font-bold uppercase tracking-wider text-stone-500 border-b border-stone-200">
                   <tr>
-                    <th className="px-4 py-4 text-left">Sr No.</th>
-                    <th className="px-4 py-4 text-left">Shipment ID</th>
-                    <th className="px-4 py-4 text-left">Creator</th>
-                    <th className="px-4 py-4 text-left">Source</th>
-                    <th className="px-4 py-4 text-left">Destination</th>
-                    <th className="px-4 py-4 text-left">Agent</th>
-                    <th className="px-4 py-4 text-left">Status</th>
-                    <th className="px-4 py-4 text-left">Actions</th>
+                    <th className="px-6 py-4">Sr No.</th>
+                    <th className="px-6 py-4">User ID</th>
+                    <th className="px-6 py-4">Name</th>
+                    <th className="px-6 py-4">Email</th>
+                    <th className="px-6 py-4">City</th>
+                    <th className="px-6 py-4">Phone</th>
+                    <th className="px-6 py-4">Role</th>
+                    <th className="px-6 py-4 text-center">Status</th>
+                    <th className="px-6 py-4 text-right">Actions</th>
                   </tr>
                 </thead>
 
-                <tbody>
-                  {shipments.map((shipment, index) => (
+                <tbody className="divide-y divide-stone-100 text-sm">
+                  {usersData.map((user, index) => (
                     <tr
-                      key={shipment.id}
-                      className="border-t hover:bg-slate-50"
+                      key={user.id}
+                      className="hover:bg-stone-50/80 transition"
                     >
-                      <td className="px-4 py-4">{index + 1}</td>
+                      <td className="px-6 py-4 text-stone-500">{index + 1}</td>
 
-                      <td className="px-4 py-4 font-bold text-indigo-600">
-                        {shipment.id}
+                      <td className="px-6 py-4 font-bold text-amber-600">
+                        {user.id}
                       </td>
 
-                      <td className="px-4 py-4">
-                        {shipment.creator}
+                      <td className="px-6 py-4 font-medium text-stone-700">
+                        {user.name}
                       </td>
 
-                      <td className="px-4 py-4">
-                        {shipment.source}
+                      <td className="px-6 py-4 text-stone-600">
+                        {user.email}
                       </td>
 
-                      <td className="px-4 py-4">
-                        {shipment.destination}
+                      <td className="px-6 py-4 text-stone-600">
+                        {user.city}
                       </td>
 
-                      <td className="px-4 py-4">
-                        {shipment.agent}
+                      <td className="px-6 py-4 font-mono text-stone-600">
+                        {user.phone}
                       </td>
 
-                      <td className="px-4 py-4">
-                        <span
-                          className={`px-3 py-1 rounded-lg text-xs font-bold uppercase ${shipment.color}`}
-                        >
-                          {shipment.status}
+                      <td className="px-6 py-4">
+                        <span className="font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-lg border border-stone-200 text-xs">
+                          {user.role}
                         </span>
                       </td>
 
-                      <td className="px-4 py-4">
-                        <div className="flex gap-4 items-center">
-                          <button className="text-indigo-600 font-semibold hover:underline">
+                      <td className="px-6 py-4 text-center">
+                        <span
+                          className={`px-2.5 py-0.5 rounded-full text-xs font-bold uppercase border ${user.color}`}
+                        >
+                          {user.status}
+                        </span>
+                      </td>
+
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex gap-4 items-center justify-end">
+                          <button className="text-xs font-bold text-stone-500 hover:text-amber-600 underline underline-offset-4 transition">
                             View
                           </button>
-
-                          <button className="flex items-center gap-1 text-slate-500 hover:text-indigo-600">
-                            <Pencil size={15} />
-                            Status
-                          </button>
-
-                          <button className="text-slate-400 hover:text-red-600">
-                            <Trash2 size={15} />
+                          <button className="text-stone-400 hover:text-rose-600 transition">
+                            <Trash2 size={14} />
                           </button>
                         </div>
                       </td>
@@ -156,35 +150,6 @@ function UserManagement() {
                   ))}
                 </tbody>
               </table>
-            </div>
-
-            {/* Pagination */}
-            <div className="p-6 border-t flex justify-between items-center">
-              <p className="text-xs text-slate-500">
-                Showing 1 to 4 of 48 shipments
-              </p>
-
-              <div className="flex items-center gap-2">
-                <button className="p-2 border rounded-lg">
-                  <ChevronLeft size={16} />
-                </button>
-
-                <button className="w-8 h-8 bg-indigo-600 text-white rounded-lg text-xs">
-                  1
-                </button>
-
-                <button className="w-8 h-8 border rounded-lg text-xs">
-                  2
-                </button>
-
-                <button className="w-8 h-8 border rounded-lg text-xs">
-                  3
-                </button>
-
-                <button className="p-2 border rounded-lg">
-                  <ChevronRight size={16} />
-                </button>
-              </div>
             </div>
           </section>
         </main>
@@ -194,4 +159,3 @@ function UserManagement() {
 }
 
 export default UserManagement;
-

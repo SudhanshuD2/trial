@@ -1,248 +1,252 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import DashboardHeader from "../../components/DashboardHeader";
 import {
   Truck,
   CheckCircle,
-  Clock3,
   AlertCircle,
-  Filter,
-  Plus,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
+  ArrowLeft,
+  Calendar,
+  MapPin,
+  User,
+  Box
 } from "lucide-react";
 
 function AdminDashboard() {
+  // State to track which shipment is being viewed/managed
+  const [selectedShipment, setSelectedShipment] = useState(null);
+
+  // Mock shipments data array pulled out for easy access
+  const shipmentsData = [
+    {
+      id: "LX-9948210",
+      creator: "John Doe",
+      route: "Mumbai → Delhi",
+      status: "Delivered",
+      color: "bg-green-100 text-green-700 border-green-200",
+      weight: "12 Kg",
+      packaging: "Box Packaging",
+      date: "04 June 2026",
+      desc: "High-value consumer electronics batch."
+    },
+    {
+      id: "LX-9948552",
+      creator: "Jane Smith",
+      route: "Mumbai → Delhi",
+      status: "In Transit",
+      color: "bg-amber-100 text-amber-800 border-amber-200",
+      weight: "25 Kg",
+      packaging: "Wooden Crate",
+      date: "09 June 2026",
+      desc: "Industrial mechanical spare parts payload."
+    },
+    {
+      id: "LX-9948119",
+      creator: "Robert Wilson",
+      route: "Mumbai → Delhi",
+      status: "Delayed",
+      color: "bg-stone-200 text-stone-700 border-stone-300",
+      weight: "8 Kg",
+      packaging: "Fragile Packaging",
+      date: "11 June 2026",
+      desc: "Glass laboratory instruments and sensors."
+    },
+  ];
+
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex min-h-screen bg-stone-100 font-sans text-stone-800">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Right Content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         <DashboardHeader />
 
-        <main className="flex-1 p-8 overflow-auto">
-          {/* Operations Overview */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">
+        <main className="flex-1 p-6 md:p-8 overflow-auto space-y-8">
+
+          {/* Operations Overview Summary Metrics */}
+          <section>
+            <h2 className="text-2xl font-bold text-stone-900 tracking-tight mb-6">
               Operations Overview
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Total Shipments */}
-              <div className="bg-white p-6 rounded-xl shadow">
-                <div className="flex justify-center mb-4">
-                  <div className="p-3 bg-indigo-50 rounded-xl text-indigo-500">
-                    <Truck size={24} />
-                  </div>
+              <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div className="p-3 bg-amber-50 rounded-xl text-amber-600 border border-amber-100">
+                  <Truck size={24} />
                 </div>
-
-                <p className="text-xs text-center font-semibold text-slate-500">
-                  Total Shipments
-                </p>
-
-                <h3 className="text-3xl font-bold text-center mt-2">
-                  12,842
-                </h3>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-stone-500">
+                    Total Shipments
+                  </p>
+                  <h3 className="text-2xl font-black text-stone-900 mt-0.5">
+                    12,842
+                  </h3>
+                </div>
               </div>
 
               {/* Shipment Success */}
-              <div className="bg-white p-6 rounded-xl shadow text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="p-3 bg-amber-50 rounded-xl text-amber-500">
-                    <CheckCircle size={24} />
-                  </div>
+              <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div className="p-3 bg-amber-50 rounded-xl text-amber-600 border border-amber-100">
+                  <CheckCircle size={24} />
                 </div>
-
-                <p className="text-xs font-semibold text-slate-500">
-                  Shipment Success
-                </p>
-
-                <h3 className="text-3xl font-bold mt-2">98.4%</h3>
-              </div>
-
-              {/* On Duty Agents */}
-              <div className="bg-white p-6 rounded-xl shadow text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="p-3 bg-emerald-50 rounded-xl text-emerald-500">
-                    <Clock3 size={24} />
-                  </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-stone-500">
+                    Success Rate
+                  </p>
+                  <h3 className="text-2xl font-black text-stone-900 mt-0.5">
+                    98.4%
+                  </h3>
                 </div>
-
-                <p className="text-xs font-semibold text-slate-500">
-                  On-duty Agents
-                </p>
-
-                <h3 className="text-3xl font-bold mt-2">156</h3>
               </div>
 
               {/* Complaints */}
-              <div className="bg-white p-6 rounded-xl shadow text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="p-3 bg-rose-50 rounded-xl text-rose-500">
-                    <AlertCircle size={24} />
+              <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div className="p-3 bg-rose-50 rounded-xl text-rose-500 border border-rose-100">
+                  <AlertCircle size={24} />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-stone-500">
+                    Open Complaints
+                  </p>
+                  <h3 className="text-2xl font-black text-stone-900 mt-0.5">
+                    24
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Condition Control View Dynamic Display */}
+          {!selectedShipment ? (
+            /* SHIPMENT LIST VIEW */
+            <section className="bg-white/80 backdrop-blur-md rounded-2xl border border-stone-200 shadow-xl overflow-hidden transition-all duration-300">
+              <div className="p-6 border-b border-stone-200">
+                <h3 className="text-lg font-bold text-stone-900 tracking-tight">Active Shipments</h3>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead className="bg-stone-50 text-xs font-bold uppercase tracking-wider text-stone-500 border-b border-stone-200">
+                    <tr>
+                      <th className="px-6 py-4">Shipment ID</th>
+                      <th className="px-6 py-4">Creator</th>
+                      <th className="px-6 py-4">Route</th>
+                      <th className="px-6 py-4 text-center">Status</th>
+                      <th className="px-6 py-4 text-right">Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody className="divide-y divide-stone-100 text-sm">
+                    {shipmentsData.map((shipment) => (
+                      <tr
+                        key={shipment.id}
+                        className="hover:bg-stone-50/80 transition"
+                      >
+                        <td className="px-6 py-4 font-bold text-amber-600">
+                          {shipment.id}
+                        </td>
+
+                        <td className="px-6 py-4 font-medium text-stone-700">
+                          {shipment.creator}
+                        </td>
+
+                        <td className="px-6 py-4 text-stone-600">
+                          {shipment.route}
+                        </td>
+
+                        <td className="px-6 py-4 text-center">
+                          <span
+                            className={`px-2.5 py-0.5 rounded-full text-xs font-bold uppercase border ${shipment.color}`}
+                          >
+                            {shipment.status}
+                          </span>
+                        </td>
+
+                        <td className="px-6 py-4 text-right">
+                          <button
+                            onClick={() => setSelectedShipment(shipment)}
+                            className="text-xs font-bold text-stone-500 hover:text-amber-600 underline underline-offset-4 transition"
+                          >
+                            Manage
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          ) : (
+            /* SIMPLIFIED DETAIL VIEW PANEL */
+            <section className="bg-white/80 backdrop-blur-md rounded-2xl border border-stone-200 shadow-xl p-6 space-y-6 transition-all duration-300">
+
+              {/* Context Action Header Bar */}
+              <div className="flex items-center justify-between border-b border-stone-200 pb-4">
+                <button
+                  onClick={() => setSelectedShipment(null)}
+                  className="flex items-center gap-2 text-sm font-bold text-stone-600 hover:text-amber-600 transition"
+                >
+                  <ArrowLeft size={16} />
+                  Back to Shipments
+                </button>
+
+                <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase border ${selectedShipment.color}`}>
+                  {selectedShipment.status}
+                </span>
+              </div>
+
+              {/* Title Identity Display */}
+              <div>
+                <span className="text-xs text-stone-400 font-bold tracking-widest uppercase">Console Manifest File</span>
+                <h3 className="text-2xl font-black text-stone-900 mt-1">
+                  Shipment {selectedShipment.id}
+                </h3>
+              </div>
+
+              {/* Quick Details Parameter Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="p-4 bg-stone-50 border border-stone-200/60 rounded-xl flex items-center gap-3">
+                  <User size={18} className="text-stone-400" />
+                  <div>
+                    <p className="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Client Account</p>
+                    <p className="text-sm font-bold text-stone-700">{selectedShipment.creator}</p>
                   </div>
                 </div>
 
-                <p className="text-xs font-semibold text-slate-500">
-                  Open Complaints
-                </p>
+                <div className="p-4 bg-stone-50 border border-stone-200/60 rounded-xl flex items-center gap-3">
+                  <MapPin size={18} className="text-stone-400" />
+                  <div>
+                    <p className="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Transit Vector</p>
+                    <p className="text-sm font-bold text-stone-700">{selectedShipment.route}</p>
+                  </div>
+                </div>
 
-                <h3 className="text-3xl font-bold mt-2">24</h3>
+                <div className="p-4 bg-stone-50 border border-stone-200/60 rounded-xl flex items-center gap-3">
+                  <Box size={18} className="text-stone-400" />
+                  <div>
+                    <p className="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Metrics & Packaging</p>
+                    <p className="text-sm font-bold text-stone-700">{selectedShipment.weight} • {selectedShipment.packaging}</p>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-stone-50 border border-stone-200/60 rounded-xl flex items-center gap-3">
+                  <Calendar size={18} className="text-stone-400" />
+                  <div>
+                    <p className="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Target Delivery</p>
+                    <p className="text-sm font-bold text-stone-700">{selectedShipment.date}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </section>
 
-          {/* Shipments Table */}
-          <section className="bg-white rounded-xl shadow overflow-hidden">
-            {/* Table Header */}
-            <div className="p-6 border-b flex items-center justify-between">
-              <h3 className="font-bold text-slate-800">Shipments</h3>
-
-              <div className="flex items-center gap-3">
-                <button className="flex items-center gap-2 px-4 py-2 border rounded-xl text-sm hover:bg-slate-50">
-                  <Filter size={16} />
-                  Filter
-                </button>
-
-                <button className="flex items-center gap-2 px-4 py-2 border rounded-xl text-sm hover:bg-slate-50">
-                  Status: All
-                  <ChevronDown size={16} />
-                </button>
-
-                <button className="flex items-center gap-2 px-4 py-2 bg-emerald-700 text-white rounded-xl text-sm font-semibold hover:bg-emerald-800">
-                  <Plus size={16} />
-                  Create Shipment
-                </button>
+              {/* Manifest Description Content */}
+              <div className="p-4 bg-amber-50/50 border border-amber-200/40 rounded-xl">
+                <p className="text-xs font-bold text-amber-800 uppercase tracking-wide mb-1">Package Contents Manifest</p>
+                <p className="text-sm text-stone-600 leading-relaxed">{selectedShipment.desc}</p>
               </div>
-            </div>
-
-            {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead className="bg-slate-50 text-xs uppercase text-slate-500">
-                  <tr>
-                    <th className="px-6 py-4">Sr No.</th>
-                    <th className="px-6 py-4">Shipment ID</th>
-                    <th className="px-6 py-4">Shipment Creator</th>
-                    <th className="px-6 py-4">Source</th>
-                    <th className="px-6 py-4">Destination</th>
-                    <th className="px-6 py-4">Status</th>
-                    <th className="px-6 py-4">Actions</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {[
-                    {
-                      id: "LX-9948210",
-                      creator: "John Doe",
-                      source: "Chicago North",
-                      destination: "Los Angeles Port",
-                      status: "Delivered",
-                      color:
-                        "bg-emerald-100 text-emerald-700",
-                    },
-                    {
-                      id: "LX-9948552",
-                      creator: "Jane Smith",
-                      source: "Houston Central",
-                      destination: "Miami Gateway",
-                      status: "In Transit",
-                      color:
-                        "bg-indigo-100 text-indigo-700",
-                    },
-                    {
-                      id: "LX-9948119",
-                      creator: "Robert Wilson",
-                      source: "Newark Hub",
-                      destination: "Seattle Terminal",
-                      status: "Delayed",
-                      color:
-                        "bg-amber-100 text-amber-700",
-                    },
-                    {
-                      id: "LX-9947002",
-                      creator: "Sarah Chen",
-                      source: "San Diego Port",
-                      destination: "Phoenix Yard",
-                      status: "Cancelled",
-                      color:
-                        "bg-rose-100 text-rose-700",
-                    },
-                  ].map((shipment, index) => (
-                    <tr
-                      key={shipment.id}
-                      className="border-t hover:bg-slate-50"
-                    >
-                      <td className="px-6 py-4">{index + 1}</td>
-
-                      <td className="px-6 py-4 font-bold text-indigo-600">
-                        {shipment.id}
-                      </td>
-
-                      <td className="px-6 py-4">
-                        {shipment.creator}
-                      </td>
-
-                      <td className="px-6 py-4">
-                        {shipment.source}
-                      </td>
-
-                      <td className="px-6 py-4">
-                        {shipment.destination}
-                      </td>
-
-                      <td className="px-6 py-4">
-                        <span
-                          className={`px-3 py-1 rounded-lg text-xs font-bold uppercase ${shipment.color}`}
-                        >
-                          {shipment.status}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-4">
-                        <button className="text-indigo-600 font-semibold hover:underline">
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Pagination */}
-            <div className="p-6 border-t flex items-center justify-between">
-              <p className="text-xs text-slate-500">
-                Showing 1 to 4 of 48 shipments
-              </p>
-
-              <div className="flex items-center gap-2">
-                <button className="p-2 border rounded-lg">
-                  <ChevronLeft size={16} />
-                </button>
-
-                <button className="w-8 h-8 bg-indigo-600 text-white rounded-lg text-xs">
-                  1
-                </button>
-
-                <button className="w-8 h-8 border rounded-lg text-xs">
-                  2
-                </button>
-
-                <button className="w-8 h-8 border rounded-lg text-xs">
-                  3
-                </button>
-
-                <button className="p-2 border rounded-lg">
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-            </div>
-          </section>
+            </section>
+          )}
         </main>
       </div>
     </div>
