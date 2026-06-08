@@ -4,8 +4,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import DeliveryAgentDashboard from "./pages/deliveryAgent/DeliveryAgentDashboard";
-import ActionScreen from "./pages/deliveryAgent/ActionScreen";
-import Shipments from "./pages/deliveryAgent/Shipments";
+import Shipments from "./pages/deliveryAgent/AssignedDelivery";
 import ManagerShipment from "./pages/admin/ShipmentManagement";
 import ManagerComplaint from "./pages/admin/ManageComplaints";
 import ManagerPricing from "./pages/admin/PricingRules";
@@ -26,19 +25,18 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />}/>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/users" element={<UserManagement/>} />
+        <Route path="/admin/users" element={<UserManagement />} />
         <Route path="/agent-dashboard" element={<DeliveryAgentDashboard />} />
         <Route path="/admin/cities" element={<CityManagement />} />
-        <Route path="/admin/agents" element={<AgentManagement />}/>
-        <Route path="/admin/shipments" element={<ShipmentManagement />}/>
-        <Route path="/admin/complaints" element={<ManageComplaints />}/>
-        <Route path="/admin/pricing" element={<PricingRules />}/>
-        <Route path="/action-screen" element={<ActionScreen />} />
+        <Route path="/admin/agents" element={<AgentManagement />} />
+        <Route path="/admin/shipments" element={<ShipmentManagement />} />
+        <Route path="/admin/complaints" element={<ManageComplaints />} />
+        <Route path="/admin/pricing" element={<PricingRules />} />
         <Route path="/shipments" element={<Shipments />} />
       </Routes>
     </BrowserRouter>
